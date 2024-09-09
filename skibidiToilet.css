@@ -38,6 +38,14 @@ body, html {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    outline: none; /* Remove the outline around the input on focus */
+    box-shadow: none; /* Remove any unwanted shadows */
+    transition: border-color 0.3s ease;
+}
+
+/* Change border color on focus without outline */
+.center-box input[type="text"]:focus {
+    border-color: #888; /* Add a subtle color change on focus */
 }
 
 /* Responsive adjustments */
