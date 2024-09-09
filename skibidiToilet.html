@@ -8,19 +8,54 @@
 </head>
 <body>
     <div class="center-box">
-        <form method="post" action="dictionary.php">
+        <!-- Form to get the word input -->
+        <form method="post" action="">
             <input type="text" name="word" placeholder="Enter a word" required>
             <button type="submit">Get Explanation</button>
         </form>
 
-        <!-- This is where the result will be shown -->
+        <!-- PHP code to display the result -->
+        <div>
         <?php
-        if (isset($_GET['explanation'])) {
-            echo "<p>Explanation: " . htmlspecialchars($_GET['explanation']) . "</p>";
-        } elseif (isset($_GET['error'])) {
-            echo "<p>" . htmlspecialchars($_GET['error']) . "</p>";
+        if (isset($_POST['word'])) {
+            // Connect to the database
+            $servername = "localhost";
+            $username = "root";  // Replace with your database username
+            $password = "";  // Replace with your database password
+            $dbname = "dictionary_db";
+
+            // Create a connection
+            $conn = new mysqli($servername, $username, $password, $dbname);
+
+            // Check the connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            // Get the word from the form input
+            $word = $_POST['word'];
+
+            // Prepare the SQL statement
+            $stmt = $conn->prepare("SELECT explanation FROM dictionary WHERE word = ?");
+            $stmt->bind_param("s", $word);
+
+            // Execute the statement
+            $stmt->execute();
+            $stmt->bind_result($explanation);
+
+            // Check if the word was found
+            if ($stmt->fetch()) {
+                echo "<p>Explanation: " . htmlspecialchars($explanation) . "</p>";
+            } else {
+                echo "<p>No explanation found for: " . htmlspecialchars($word) . "</p>";
+            }
+
+            // Close the statement and connection
+            $stmt->close();
+            $conn->close();
         }
         ?>
+        </div>
     </div>
 </body>
 </html>
