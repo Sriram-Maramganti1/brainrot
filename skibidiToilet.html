@@ -3,12 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centered Text Box</title>
-    <link rel="stylesheet" href="skibidiToilet.css">
+    <title>Dictionary Search</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="center-box">
-        <input type="text" placeholder="Enter your text here">
+        <form method="post" action="dictionary.php">
+            <input type="text" name="word" placeholder="Enter a word" required>
+            <button type="submit">Get Explanation</button>
+        </form>
+
+        <!-- This is where the result will be shown -->
+        <?php
+        if (isset($_GET['explanation'])) {
+            echo "<p>Explanation: " . htmlspecialchars($_GET['explanation']) . "</p>";
+        } elseif (isset($_GET['error'])) {
+            echo "<p>" . htmlspecialchars($_GET['error']) . "</p>";
+        }
+        ?>
     </div>
 </body>
-</html> 
+</html>

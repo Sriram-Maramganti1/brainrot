@@ -19,7 +19,3 @@ INSERT INTO dictionary (word, explanation) VALUES
 ('Database', 'A database is an organized collection of structured data.'),
 ('Python', 'Python is a high-level, interpreted programming language.'),
 ('MySQL', 'MySQL is an open-source relational database management system.');
-
--- Query to get an explanation for a specific word
--- For example, fetching explanation for the word "JavaScript"
-SELECT explanation FROM dictionary WHERE word = 'JavaScript';

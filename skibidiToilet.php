@@ -1,15 +1,15 @@
 <?php
 $servername = "localhost";
-$username = "root";
-$password = "";
+$username = "root"; // Change to your MySQL username
+$password = ""; // Change to your MySQL password
 $dbname = "dictionary_db";
 
-// Create connection
+// Create connection to the MySQL database
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
+// Check if the connection works
 if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -24,9 +24,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_result($explanation);
 
     if ($stmt->fetch()) {
-        echo "Explanation: " . $explanation;
+        // Redirect back to the form with the explanation
+        header("Location: index.html?explanation=" . urlencode($explanation));
     } else {
-        echo "No explanation found for: " . $word;
+        // If no explanation was found, display an error
+        header("Location: index.html?error=" . urlencode("No explanation found for: " . $word));
     }
 
     // Close the statement and connection
